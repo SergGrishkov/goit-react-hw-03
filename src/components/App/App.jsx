@@ -39,7 +39,7 @@ function App() {
       <h1>Phonebook</h1>
       <ContactForm onAddContact={addContact} />
       <SearchBox value={filter} onSearch={setFilter} />
-      {contact.length > 0 ? (<ContactList contacts={foundContacts} onDelete={deleteContact} />) : ''}
+      {contact.length > 0 && <ContactList contacts={foundContacts} onDelete={deleteContact} />}
     </div>
   );
 }
