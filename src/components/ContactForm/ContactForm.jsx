@@ -20,28 +20,28 @@ export const ContactForm = ({ onAddContact }) => {
     number: Yup.string()
       .min(3, "Too short")
       .max(30, "Too long")
+      .matches(
+        /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/,
+        "Format should be 333-22-11"
+      )
       .required("Required"),
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAddContact({
-      id: nanoid(),
-      name: e.target.elements.name.value,
-      number: e.target.elements.number.value,
-    });
-  };
 
   return (
     <Formik
       initialValues={fieldsValue}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
-        console.log(values);
+        onAddContact({
+          id: nanoid(),
+          name: values.name,
+          number: values.number,
+        });
         actions.resetForm();
       }}
     >
-      <Form className={css.searchForm} onSubmit={handleSubmit}>
+      <Form className={css.searchForm} >
         <div className={css.input}>
           <label htmlFor={nameId}>Name</label>
           <Field type="text" name="name" id={nameId} />
